@@ -1,116 +1,66 @@
 <style>
-     /* General styles for body */
-     body {
-         font-family: 'Arial', sans-serif;
-         margin: 0;
-         padding: 0;
-         background: #212121;
-         display: flex;
-         justify-content: center;
-         align-items: flex-start;
-         min-height: 100vh;
-     }
- 
-     h1 {
-         text-align: center;
-         margin-top: 20px;
-         font-size: 1.8rem;
-     }
- 
-     /* Container for the inbox */
-     .container {
-         background-color: rgba(255, 255, 255, 0.9);
-         padding: 40px;
-         border-radius: 10px;
-         box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
-         max-width: 400px;
-         width: 100%;
-         text-align: center;
-         margin: 40px 20px;
-         box-sizing: border-box;
-     }
- 
-     .back-button {
-         position: absolute;
-         top: 20px;
-         right: 20px;
-     }
- 
-     /* Back button styles */
-     .back-button button {
-         background-color: #f5e55a;
-         color: rgb(0, 0, 0);
-         padding: 15px 30px;
-         margin: 10px;
-         border: none;
-         border-radius: 5px;
-         cursor: pointer;
-         font-size: 18px;
-     }
- 
-     /* Hover effect for the back button */
-     .back-button button:hover {
-         background-color: #eede48;
-         box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.2);
-         transform: translateY(-5px);
-         transition: background-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
-     }
- 
-     /* List styles */
-     ul {
-         list-style-type: none;
-         padding: 0;
-         margin-top: 20px;
-         text-align: left;
-     }
- 
-     ul li {
-         background-color: #fff;
-         margin-bottom: 10px;
-         padding: 15px;
-         border-radius: 8px;
-         box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-         font-size: 16px;
-     }
- 
-     /* Mobile responsiveness */
-@media screen and (max-width: 480px) {
+    /* General styles for body */
     body {
-        flex-direction: column; /* make items stack vertically */
-        align-items: center;
-        padding-top: 20px;
-    }
-
-    .container {
-        padding: 30px 20px;
-        margin: 20px;
-        order: 2; /* show below the back button */
+        /* Set font, margin, padding, and background color */
+        font-family: 'Arial', sans-serif;
+        margin: 0;
+        padding: 0;
+        background: #212121;
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+        height: 100vh;
     }
 
     h1 {
-        font-size: 1.5rem;
+        text-align: center;
+        margin-top: 20px;
+    }
+
+    /* Container for the inbox */
+    .container {
+        /* Styling for the container */
+        background-color: rgba(255, 255, 255, 0.9);
+        padding: 40px;
+        border-radius: 10px;
+        box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+        max-width: 400px;
+        width: 100%;
+        text-align: center;
+        margin-top: 40px;
     }
 
     .back-button {
-        position: relative; /* take it out of absolute positioning */
-        text-align: center;
-        margin-top: 10px;
-        order: 1; /* show above the container */
-    }
-
+        position: absolute;
+        top: 20px;
+        right: 20px;
+    }    
+    /* Back button styles */
     .back-button button {
-        width: 85%;
-        padding: 12px;
-        font-size: 12px;
+        /* Styling for the back button */
+        background-color: #f5e55a;
+        color: rgb(0, 0, 0);
+        padding: 15px 30px;
+        margin: 10px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 18px; 
+    }    
+    /* Hover effect for the back button */
+    .back-button button:hover {
+        background-color: #eede48;
+        box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.2);
+        transform: translateY(-5px);
+        transition: background-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
     }
-
-    ul li {
-        font-size: 15px;
-        padding: 2px;
+    /* List styles */
+    ul {
+        list-style-type: none;
+        padding: 0;
     }
-}
-
- </style>
+    
+</style>
 
 <html lang="en">
   <head>
