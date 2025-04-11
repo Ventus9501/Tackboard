@@ -1,7 +1,6 @@
 <style>
     /* General styles for body */
     body {
-        /* Set font, margin, padding, and background color */
         font-family: 'Arial', sans-serif;
         margin: 0;
         padding: 0;
@@ -9,29 +8,27 @@
         display: flex;
         justify-content: center;
         align-items: flex-start;
-        height: 100vh;
+        min-height: 100vh;
     }
 
     h1 {
         text-align: center;
         margin-top: 20px;
+        font-size: 1.8rem;
     }
 
-    /* Container for the form */
     .container {
-        /* Styling for the form container */
         background-color: rgba(255, 255, 255, 0.9);
         padding: 40px;
         border-radius: 10px;
         box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
-        max-width: 400px;
         width: 100%;
+        max-width: 400px;
         font-family: 'Trickster', sans-serif;
         text-align: center;
-        margin-top: 40px;
+        margin: 40px 20px; /* Adds side padding for small screens */
     }
 
-    /* Job information section styles */
     .job_info {
         display: flex;
         flex-direction: column;
@@ -39,12 +36,16 @@
         align-items: center;
     }
 
-    .job_title {
+    .job_title,
+    .job_description,
+    .job_location,
+    .job_salary,
+    .contact_info {
         margin-top: 20px;
+        width: 100%;
     }
 
-    /* Input field styles for job details */
-    .job_title input, .job_description input, .job_location input, .job_salary input, .contact_info input {
+    .job_info input {
         width: 100%;
         padding: 12px;
         margin-bottom: 15px;
@@ -52,25 +53,9 @@
         border-radius: 5px;
         font-size: 16px;
         outline: none;
+        box-sizing: border-box;
     }
 
-    .job_description {
-        margin-top: 20px;
-    }
-
-    .job_location {
-        margin-top: 20px;
-    }
-
-    .job_salary {
-        margin-top: 20px;
-    }
-
-    .contact_info {
-        margin-top: 20px;
-    }
-
-    /* Submit button styles */
     .container button {
         width: 100%;
         padding: 12px;
@@ -82,12 +67,9 @@
         margin-top: 10px;
         cursor: pointer;
     }
-    
-    /* Hover effect for the submit button */
+
     .container button:hover {
-        position: relative;
         background-color: #eede29;
-        color: rgb(0, 0, 0);
         box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.2);
         transition: background-color 0.3s ease, box-shadow 0.3s ease;
     }
@@ -96,29 +78,52 @@
         position: absolute;
         top: 20px;
         right: 20px;
-    } 
+    }
 
-    /* Back button styles */
     .back-button button {
         background-color: #f5e55a;
         color: rgb(0, 0, 0);
-        padding: 15px 30px;
+        padding: 12px 20px;
         margin: 10px;
         border: none;
         border-radius: 5px;
         cursor: pointer;
-        font-size: 18px; 
-    }   
+        font-size: 16px;
+    }
 
-    /* Hover effect for the back button */
     .back-button button:hover {
-        color: rgb(0, 0, 0);
         background-color: #eede48;
         box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.2);
         transform: translateY(-5px);
         transition: background-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
     }
 
+    /* Mobile responsiveness */
+    @media screen and (max-width: 480px) {
+        body {
+            align-items: flex-start;
+            padding-top: 20px;
+        }
+
+        .container {
+            padding: 30px 20px;
+            margin: 20px;
+        }
+
+        h1 {
+            font-size: 1.5rem;
+        }
+
+        .back-button {
+            position: static;
+            text-align: center;
+            margin-top: 10px;
+        }
+
+        .back-button button {
+            width: 100%;
+        }
+    }
 </style>
 
 <html lang="en">
