@@ -1,7 +1,6 @@
 <style>
 /* General styles for body */
 body {
-    /* Set font, margin, padding, and background color */
     font-family: 'Arial', sans-serif;
     margin: 0;
     padding: 0;
@@ -9,7 +8,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
+    min-height: 100vh;
     color: black;
 }
 
@@ -20,11 +19,12 @@ body {
     align-items: center;
     flex-direction: column;
     width: 100%;
+    padding: 20px;
+    box-sizing: border-box;
 }
 
 /* Login form styles */
 .login {
-    /* Styling for the login form container */
     background-color: rgba(255, 255, 255, 0.9);
     padding: 40px;
     border-radius: 10px;
@@ -32,6 +32,7 @@ body {
     max-width: 400px;
     width: 100%;
     font-family: 'Trickster', sans-serif;
+    box-sizing: border-box;
 }
 
 /* Form labels and inputs */
@@ -42,7 +43,6 @@ body {
 }
 
 .login input {
-    /* Styling for input fields */
     width: 100%;
     padding: 12px;
     margin-bottom: 15px;
@@ -50,10 +50,11 @@ body {
     border-radius: 5px;
     font-size: 16px;
     outline: none;
+    box-sizing: border-box;
 }
 
 .login input:focus {
-    border-color: #3498db; /* Highlight input on focus */
+    border-color: #3498db;
 }
 
 /* Login button styles */
@@ -73,7 +74,6 @@ body {
 .login button:hover {
     background-color: #eede48;
     box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.2);
-    transition: box-shadow 0.3s ease;
 }
 
 /* Error message styles */
@@ -99,6 +99,7 @@ body {
     text-decoration: underline;
 }
 
+/* Checkbox styles */
 .login .checkbox-container {
     display: flex;
     justify-content: flex-start;
@@ -110,7 +111,25 @@ body {
     margin-right: 10px;
 }
 
+/* Responsive tweaks for small screens */
+@media screen and (max-width: 480px) {
+    .login {
+        padding: 30px 20px;
+    }
+
+    .login label,
+    .login input,
+    .login button {
+        font-size: 15px;
+    }
+
+    .login p,
+    .error-message {
+        font-size: 13px;
+    }
+}
 </style>
+
 
 <html lang="en">
 <head>
