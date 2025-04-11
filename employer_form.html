@@ -1,0 +1,225 @@
+<style>
+    /* General styles for body */
+    body {
+        /* Set font, margin, padding, and background color */
+        font-family: 'Arial', sans-serif;
+        margin: 0;
+        padding: 0;
+        background: #212121;
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+        height: 100vh;
+    }
+
+    h1 {
+        text-align: center;
+        margin-top: 20px;
+    }
+
+    /* Container for the form */
+    .container {
+        /* Styling for the form container */
+        background-color: rgba(255, 255, 255, 0.9);
+        padding: 40px;
+        border-radius: 10px;
+        box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+        max-width: 400px;
+        width: 100%;
+        font-family: 'Trickster', sans-serif;
+        text-align: center;
+        margin-top: 40px;
+    }
+
+    /* Job information section styles */
+    .job_info {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .job_title {
+        margin-top: 20px;
+    }
+
+    /* Input field styles for job details */
+    .job_title input, .job_description input, .job_location input, .job_salary input, .contact_info input {
+        width: 100%;
+        padding: 12px;
+        margin-bottom: 15px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        font-size: 16px;
+        outline: none;
+    }
+
+    .job_description {
+        margin-top: 20px;
+    }
+
+    .job_location {
+        margin-top: 20px;
+    }
+
+    .job_salary {
+        margin-top: 20px;
+    }
+
+    .contact_info {
+        margin-top: 20px;
+    }
+
+    /* Submit button styles */
+    .container button {
+        width: 100%;
+        padding: 12px;
+        background-color: #f5e55a;
+        color: rgb(0, 0, 0);
+        font-size: 16px;
+        border: none;
+        border-radius: 5px;
+        margin-top: 10px;
+        cursor: pointer;
+    }
+    
+    /* Hover effect for the submit button */
+    .container button:hover {
+        position: relative;
+        background-color: #eede29;
+        color: rgb(0, 0, 0);
+        box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.2);
+        transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .back-button {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+    } 
+
+    /* Back button styles */
+    .back-button button {
+        background-color: #f5e55a;
+        color: rgb(0, 0, 0);
+        padding: 15px 30px;
+        margin: 10px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 18px; 
+    }   
+
+    /* Hover effect for the back button */
+    .back-button button:hover {
+        color: rgb(0, 0, 0);
+        background-color: #eede48;
+        box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.2);
+        transform: translateY(-5px);
+        transition: background-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
+    }
+
+</style>
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employer Form</title>
+</head>
+<body>
+    <!-- Form container -->
+    <div class="container">
+        <div class="job_info">
+            <form id="employerForm">
+                <!-- Form title -->
+                <div class="title">
+                    <h1>Employer Form</h1>
+                </div>
+                <!-- Job title input -->
+                <div class="job_title">
+                    <label for="job_title">Job Title</label>
+                    <input type="text" name="job_title" id="job_title" required>
+                </div>
+                <!-- Job description input -->
+                <div class="job_description">
+                    <label for="job_description">Job Description</label>
+                    <input type="text" name="job_description" id="job_description" required>
+                </div>
+                <!-- Job location input -->
+                <div class="job_location">
+                    <label for="job_location">Job Location</label>
+                    <input type="text" name="job_location" id="job_location" required>
+                </div>
+                <!-- Job salary input -->
+                <div class="job_salary">
+                    <label for="job_salary">Compensation</label>
+                    <input type="text" name="job_salary" id="job_salary" required>
+                </div>
+                <!-- Contact information inputs -->
+                <div class="contact_info">
+                    <label for="contact_email">Contact Email</label>
+                    <input type="text" name="contact_email" id="contact_email" required>
+                    <label for="contact_phone">Contact Phone</label>
+                    <input type="text" name="contact_phone" id="contact_phone" required>
+                </div>
+                <!-- Submit button -->
+                <button type="submit" id="submit">Submit</button>
+            </form>
+        </div>
+    </div>
+    <!-- Back button -->
+    <div class="back-button">
+        <button onclick="location.href='main_page.html'" id="back">Back to Board</button>
+    </div>
+
+    <script>
+        // Ensure user is logged in
+        let currentUser = localStorage.getItem('currentUser');
+        if (currentUser === null) {
+            window.location.href = 'login.html';  // Redirect to login if no user
+        }
+
+        // Form submission handling
+        document.getElementById('employerForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            // Get form field values
+            const jobTitle = document.getElementById('job_title').value;
+            const jobDescription = document.getElementById('job_description').value;
+            const jobLocation = document.getElementById('job_location').value;
+            const jobSalary = document.getElementById('job_salary').value;
+            const contactEmail = document.getElementById('contact_email').value;
+            const contactPhone = document.getElementById('contact_phone').value;
+
+            let users = JSON.parse(localStorage.getItem('users')) || [];
+            let currentUserData = users.find(user => user.name === currentUser);
+            const employerName = currentUser;
+            const userEmail = currentUserData ? currentUserData.email : null;
+
+            // Ensure that all fields have values before submitting
+            if (!jobTitle || !jobDescription || !jobLocation || !jobSalary || !contactEmail || !contactPhone) {
+                alert("Please fill in all fields before submitting.");
+                return; // Prevent submission if any field is empty
+            }
+
+            // Store job listing
+            let pendingJobListings = JSON.parse(localStorage.getItem('pendingJobListings')) || [];
+            pendingJobListings.push({
+                jobTitle, 
+                jobDescription, 
+                jobLocation, 
+                jobSalary, 
+                employerName,
+                contactEmail, 
+                contactPhone
+            });
+            localStorage.setItem('pendingJobListings', JSON.stringify(pendingJobListings));
+
+            // Show success alert and redirect
+            alert('Job listing submitted for approval!');
+            window.location.href = 'main_page.html';
+        });
+    </script>
+</body>
+</html>

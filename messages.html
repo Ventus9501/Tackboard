@@ -1,0 +1,196 @@
+<style>
+    /* General styles for body */
+    body {
+        /* Set font, margin, padding, and background color */
+        font-family: 'Arial', sans-serif;
+        margin: 0;
+        padding: 0;
+        background: #212121;
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+        height: 100vh;
+    }
+
+    h1 {
+        text-align: center;
+        margin-top: 20px;
+    }
+
+    /* Container for the messages */
+    .container {
+        /* Styling for the container */
+        background-color: rgba(255, 255, 255, 0.9);
+        padding: 40px;
+        border-radius: 10px;
+        box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+        max-width: 400px;
+        width: 100%;
+        font-family: 'Trickster', sans-serif;
+        text-align: center;
+        margin-top: 40px;
+    }
+
+    .back-button {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+    }    
+    /* Back button styles */
+    .back-button button {
+        /* Styling for the back button */
+        background-color: #f5e55a;
+        color: rgb(0, 0, 0);
+        padding: 15px 30px;
+        margin: 10px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 18px; 
+    }    
+    /* Hover effect for the back button */
+    .back-button button:hover {
+        color: rgb(0, 0, 0);
+        background-color: #eede48;
+        box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.2);
+        transform: translateY(-5px);
+        transition: background-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
+    }
+    /* Message item styles */
+    .message-item {
+        /* Styling for individual messages */
+        background-color: rgba(255, 255, 255, 0.9);
+        padding: 10px;
+        margin: 10px 0;
+        border-radius: 5px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+    .message-item strong {
+        display: block;
+        font-size: 16px;
+        margin-bottom: 5px;
+    }
+    .message-item p {
+        margin: 5px 0;
+    }
+    /* Button styles for deleting messages */
+    .message-item button {
+        background-color: #ff0000;
+        color: white;
+        padding: 5px 10px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        margin-top: 10px;
+    }
+    /* Hover effect for delete button */
+    .message-item button:hover {
+        background-color: #bd0000;
+        transition: background-color 0.3s ease;
+    }
+
+    .new_message_button {
+        display: flex;
+        justify-content: center;
+        margin-top: 20px;
+    }
+
+    /* New message button styles */
+    .new_message_button button {
+        background-color: #f5e55a;
+        color: rgb(0, 0, 0);
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+    /* Hover effect for new message button */
+    .new_message_button button:hover {
+        background-color: #eede29;
+        box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.2);
+        transition: box-shadow 0.3s ease;
+    }
+
+    .peer-messages ul {
+        list-style-type: none;
+        padding: 0;
+    }
+
+</style>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Messages</title>
+  </head>
+  <body>
+    <!-- Back button -->
+    <div class="back-button">
+        <button onclick="location.href='main_page.html'" id="back">Back to Board</button>
+    </div>
+    <!-- Messages container -->
+    <div class="container">
+        <h1>Messages</h1>
+        <div class="peer-messages">
+            <p id="no-peer-messages">No new messages</p>
+            <ul id="new-messages"></ul>
+        </div>
+        <!-- New message button -->
+        <div class="new_message_button">
+            <button onclick="location.href='send_message.html'">New Message</button>
+        </div>
+    </div>
+  </body>
+  <script>
+    // Check if the user is logged in
+    let currentUser = localStorage.getItem('currentUser');
+        if (currentUser === null) {
+            window.location.href = 'login.html'; // Redirect to login if not logged in
+        }
+        
+    // Retrieve user data from localStorage
+    let users = JSON.parse(localStorage.getItem('users')) || [];
+    let currentUserData = users.find(user => user.name === currentUser);
+    let userEmail = currentUserData ? currentUserData.email : null;
+
+    if (userEmail) {
+        // Retrieve messages for the current user
+        let messages = JSON.parse(localStorage.getItem('messages')) || {};
+        let userMessages = messages[userEmail] || [];
+
+        const messagesContainer = document.getElementById('new-messages');
+        const noMessages = document.getElementById('no-peer-messages');
+
+        if (userMessages.length > 0) {
+            noMessages.style.display = 'none'; // Hide "no messages" text
+            userMessages.forEach((message, index) => {
+                // Create a list item for each message
+                const messageItem = document.createElement('li');
+                messageItem.className = 'message-item';
+                messageItem.innerHTML = `
+                    <strong>From:</strong> ${message.from}<br>
+                    <p><strong>Subject:</strong> ${message.subject}</p>
+                    <p><strong>Message:</strong> ${message.body}</p>
+                    <button onclick="deleteMessage(${index})">Delete</button>
+                `;
+                messagesContainer.appendChild(messageItem);
+            });
+        }
+    }
+
+    // Function to delete a message
+    function deleteMessage(index) {
+        if (confirm("Are you sure you want to delete this message?")) {
+            let messages = JSON.parse(localStorage.getItem('messages')) || {};
+            let userMessages = messages[userEmail] || [];
+            userMessages.splice(index, 1); // Remove the message at the specified index
+            messages[userEmail] = userMessages; // Update the user's messages
+            localStorage.setItem('messages', JSON.stringify(messages)); // Save updated messages to localStorage
+            location.reload(); // Reload the page to reflect changes
+        }
+    }
+  </script>
+</html>

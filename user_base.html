@@ -1,0 +1,29 @@
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>User set</title>
+</head>
+<body>
+<p id="users"></p>
+</body>
+<script>
+    if (localStorage.getItem('currentUser') !== 'Admin') {
+        window.location.href = 'main_page.html';
+    }
+
+    let currentUser = localStorage.getItem('currentUser');
+    let users = JSON.parse(localStorage.getItem('users')) || [];
+    let currentUserData = users.find(user => user.name === currentUser);
+
+    if (currentUserData && currentUserData.role !== 'Admin') {
+        window.location.href = 'main_page.html';
+    }
+
+    window.onload = function() {
+        let currentUser = localStorage.getItem('currentUser');
+        let users = JSON.parse(localStorage.getItem('users')) || [];
+        document.getElementById("users").innerHTML = JSON.stringify(users);
+    }
+</script>
+</html>

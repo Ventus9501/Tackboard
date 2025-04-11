@@ -1,0 +1,123 @@
+<style>
+/* General styles for body */
+body {
+    /* Set font, margin, padding, and background color */
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    background: #212121;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    height: 100vh;
+}
+
+/* Container for the form */
+.container {
+    /* Styling for the form container */
+    background-color: rgba(255, 255, 255, 0.9);
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+    max-width: 400px;
+    width: 100%;
+    font-family: 'Trickster', sans-serif;
+    text-align: center;
+    margin-top: 40px;
+}
+
+/* Input and textarea styles */
+.container input, .container textarea {
+    /* Styling for input fields and textarea */
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    outline: none;
+}
+
+/* Button styles */
+.container button {
+    /* Styling for the submit button */
+    width: 100%;
+    padding: 12px;
+    background-color: #f5e55a;
+    color: rgb(0, 0, 0);
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+/* Hover effect for the button */
+.container button:hover {
+    background-color: #eede29;
+    box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.2);
+    transition: box-shadow 0.3s ease;
+}
+</style>
+
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Send Message</title>
+</head>
+<body>
+    <!-- Form container -->
+    <div class="container">
+        <h1>Send Message</h1>
+        <form id="sendMessageForm">
+            <!-- Input fields for recipient email, subject, and message body -->
+            <input type="email" id="to" placeholder="Recipient Email" required>
+            <input type="text" id="subject" placeholder="Subject" required>
+            <textarea id="body" placeholder="Message" rows="5" required></textarea>
+            <!-- Submit button -->
+            <button type="submit">Send</button>
+        </form>
+    </div>
+</body>
+<script>
+    // Handle form submission
+    document.getElementById('sendMessageForm').addEventListener('submit', function(event) {
+        event.preventDefault(); // Prevent default form submission
+
+        // Check if the user is logged in
+        let currentUser = localStorage.getItem('currentUser');
+        if (currentUser === null) {
+            window.location.href = 'login.html'; // Redirect to login if not logged in
+        }
+
+        // Retrieve user data from localStorage
+        let users = JSON.parse(localStorage.getItem('users')) || [];
+        let currentUserData = users.find(user => user.name === currentUser);
+        let fromEmail = currentUserData ? currentUserData.email : null;
+
+        // Get form field values
+        const to = document.getElementById('to').value;
+        const subject = document.getElementById('subject').value;
+        const body = document.getElementById('body').value;
+
+        // Retrieve messages from localStorage or initialize as empty object
+        let messages = JSON.parse(localStorage.getItem('messages')) || {};
+        if (!messages[to]) {
+            messages[to] = []; // Initialize recipient's message array if not present
+        }
+
+        // Add the new message to the recipient's message array
+        messages[to].push({
+            from: fromEmail,
+            subject: subject,
+            body: body
+        });
+
+        // Save updated messages to localStorage
+        localStorage.setItem('messages', JSON.stringify(messages));
+        alert('Message sent!'); // Show success alert
+        window.location.href = 'main_page.html'; // Redirect to main page
+    });
+</script>
+</html>

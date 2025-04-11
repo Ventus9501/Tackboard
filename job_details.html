@@ -1,0 +1,73 @@
+<style>
+/* General styles for body */
+body {
+    /* Set font, margin, padding, and background color */
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    background: #212121;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    height: 100vh;
+}
+
+/* Container for job details */
+.container {
+    /* Styling for the container */
+    background-color: rgba(255, 255, 255, 0.9);
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+    max-width: 400px;
+    width: 100%;
+    font-family: 'Trickster', sans-serif;
+    text-align: center;
+    margin-top: 40px;
+}
+</style>
+
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Job Details</title>
+</head>
+<body>
+    <!-- Job details container -->
+    <div class="container">
+        <h1>Job Details</h1>
+        <div id="job-details"></div>
+    </div>
+</body>
+<script>
+    // Redirect to login page if the user is not logged in
+    if (localStorage.getItem('currentUser') === null) {
+        window.location.href = 'login.html';
+    }
+
+    // Get the job index from the URL parameters
+    const urlParams = new URLSearchParams(window.location.search);
+    const index = urlParams.get('index');
+
+    // Retrieve pending job listings from localStorage
+    let pendingJobListings = JSON.parse(localStorage.getItem('pendingJobListings')) || [];
+    const job = pendingJobListings[index]; // Get the job at the specified index
+
+    if (job) {
+        // Display job details if the job exists
+        document.getElementById('job-details').innerHTML = `
+            <strong>Title:</strong> ${job.jobTitle}<br>
+            <strong>Description:</strong> ${job.jobDescription}<br>
+            <strong>Location:</strong> ${job.jobLocation}<br>
+            <strong>Compensation:</strong> ${job.jobSalary}<br>
+            <strong>Email:</strong> ${job.contactEmail}<br>
+            <strong>Phone:</strong> ${job.contactPhone}<br>
+            <strong>Employer:</strong> ${job.employerName}<br>
+        `;
+    } else {
+        // Display an error message if the job is not found
+        document.getElementById('job-details').innerText = 'Job listing not found.';
+    }
+</script>
+</html>

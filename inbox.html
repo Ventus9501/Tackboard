@@ -1,0 +1,146 @@
+<style>
+    /* General styles for body */
+    body {
+        /* Set font, margin, padding, and background color */
+        font-family: 'Arial', sans-serif;
+        margin: 0;
+        padding: 0;
+        background: #212121;
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+        height: 100vh;
+    }
+
+    h1 {
+        text-align: center;
+        margin-top: 20px;
+    }
+
+    /* Container for the inbox */
+    .container {
+        /* Styling for the container */
+        background-color: rgba(255, 255, 255, 0.9);
+        padding: 40px;
+        border-radius: 10px;
+        box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+        max-width: 400px;
+        width: 100%;
+        text-align: center;
+        margin-top: 40px;
+    }
+
+    .back-button {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+    }    
+    /* Back button styles */
+    .back-button button {
+        /* Styling for the back button */
+        background-color: #f5e55a;
+        color: rgb(0, 0, 0);
+        padding: 15px 30px;
+        margin: 10px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 18px; 
+    }    
+    /* Hover effect for the back button */
+    .back-button button:hover {
+        background-color: #eede48;
+        box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.2);
+        transform: translateY(-5px);
+        transition: background-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
+    }
+    /* List styles */
+    ul {
+        list-style-type: none;
+        padding: 0;
+    }
+    
+</style>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inbox</title>
+  </head>
+  <body>
+    <!-- Back button -->
+    <div class="back-button">
+        <button onclick="location.href='main_page.html'" id="back">Back to Board</button>
+    </div>
+    <!-- Inbox container -->
+    <div class="container">
+        <h1>Inbox</h1>
+        <div class="messages">
+            <p id="no-messages">No pending job listings.</p>
+            <ul id="job-listings"></ul>
+        </div>
+    </div>
+  </body>
+  <script>
+    // Redirect to login page if the user is not logged in
+    let currentUser = localStorage.getItem('currentUser');
+        if (currentUser === null) {
+            window.location.href = 'login.html';
+        }
+        
+    // Retrieve pending job listings from localStorage
+    let pendingJobListings = JSON.parse(localStorage.getItem('pendingJobListings')) || [];
+    const jobListingsContainer = document.getElementById('job-listings');
+    const noMessages = document.getElementById('no-messages');
+
+    if (pendingJobListings.length > 0) {
+        // Hide "no messages" text if there are job listings
+        noMessages.style.display = 'none';
+        pendingJobListings.forEach((job, index) => {
+            // Create a list item for each job listing
+            const jobItem = document.createElement('li');
+            jobItem.innerHTML = `
+                <strong>Title:</strong> ${job.jobTitle}<br>
+                <strong>Description:</strong> ${job.jobDescription}<br>
+                <strong>Location:</strong> ${job.jobLocation}<br>
+                <strong>Compensation:</strong> ${job.jobSalary}<br>
+                <strong>Email:</strong> ${job.contactEmail}<br>
+                <strong>Phone:</strong> ${job.contactPhone}<br>
+                <a href="job_details.html?index=${index}">View Details</a><br>
+                <button onclick="approveJob(${index})">Approve</button>
+                <button onclick="rejectJob(${index})">Reject</button>
+                <button onclick="deleteJob(${index})">Delete</button>
+                <hr>
+            `;
+            jobListingsContainer.appendChild(jobItem);
+        });
+    }
+
+    // Approve a job listing
+    function approveJob(index) {
+        let jobListings = JSON.parse(localStorage.getItem('jobListings')) || [];
+        jobListings.push(pendingJobListings[index]); // Add the job to approved listings
+        localStorage.setItem('jobListings', JSON.stringify(jobListings));
+        pendingJobListings.splice(index, 1); // Remove the job from pending listings
+        localStorage.setItem('pendingJobListings', JSON.stringify(pendingJobListings));
+        location.reload(); // Reload the page to reflect changes
+    }
+
+    // Reject a job listing
+    function rejectJob(index) {
+        pendingJobListings.splice(index, 1); // Remove the job from pending listings
+        localStorage.setItem('pendingJobListings', JSON.stringify(pendingJobListings));
+        location.reload(); // Reload the page to reflect changes
+    }
+
+    // Delete a job listing
+    function deleteJob(index) {
+        if (confirm("Are you sure you want to delete this job listing?")) {
+            pendingJobListings.splice(index, 1); // Remove the job from pending listings
+            localStorage.setItem('pendingJobListings', JSON.stringify(pendingJobListings));
+            location.reload(); // Reload the page to reflect changes
+        }
+    }
+  </script>
+</html>

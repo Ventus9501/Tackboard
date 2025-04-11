@@ -1,0 +1,194 @@
+<style>
+/* General styles for body */
+body {
+    /* Set font, margin, padding, and background color */
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    background: #212121;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    color: black;
+}
+
+/* Container for the login form */
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 100%;
+}
+
+/* Login form styles */
+.login {
+    /* Styling for the login form container */
+    background-color: rgba(255, 255, 255, 0.9);
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+    max-width: 400px;
+    width: 100%;
+    font-family: 'Trickster', sans-serif;
+}
+
+/* Form labels and inputs */
+.login label {
+    font-size: 16px;
+    margin-bottom: 8px;
+    display: block;
+}
+
+.login input {
+    /* Styling for input fields */
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    outline: none;
+}
+
+.login input:focus {
+    border-color: #3498db; /* Highlight input on focus */
+}
+
+/* Login button styles */
+.login button {
+    width: 100%;
+    padding: 12px;
+    background-color: #f5e55a;
+    color: rgb(0, 0, 0);
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+/* Hover effect for login button */
+.login button:hover {
+    background-color: #eede48;
+    box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.2);
+    transition: box-shadow 0.3s ease;
+}
+
+/* Error message styles */
+.error-message {
+    color: red;
+    font-size: 14px;
+    text-align: center;
+    margin-top: 10px;
+}
+
+/* Link to registration page */
+.login p:last-child {
+    font-size: 14px;
+    text-align: center;
+}
+
+.login a {
+    color: #3498db;
+    text-decoration: none;
+}
+
+.login a:hover {
+    text-decoration: underline;
+}
+
+.login .checkbox-container {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    margin-top: -10px;
+}
+
+.login .checkbox-container label {
+    margin-right: 10px;
+}
+
+</style>
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+</head>
+<body>
+    <!-- Login form container -->
+    <div class="container">
+        <div class="login">
+            <p>Please input your login information</p>
+            <form id="loginForm" action="main_page.html" method="post">
+                <!-- Email input -->
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required>
+                <!-- Password input -->
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" required>
+                <!-- Submit button -->
+                <button type="submit">Login</button>
+            </form>
+            <!-- Error message -->
+            <p id="error-message" class="error-message"></p>
+            <!-- Link to registration page -->
+            <p>Don't have an account? <a href="register.html">Register here!</a></p>
+        </div>
+    </div>
+    <script>
+        // Retrieve users from localStorage or initialize as empty array
+        let users = JSON.parse(localStorage.getItem('users')) || [];
+
+        // Add administrator account if it doesn't exist
+        window.onload = function() {
+            // Check if admin exists
+            let adminExists = users.some(user => user.email === 'admin123@gmail.com');
+            if (!adminExists) {
+                users.push({
+                    name: 'Administrator',
+                    email: 'admin123@gmail.com',
+                    password: 'ADMIN@CCESS',
+                    role: 'Admin'
+                });
+                localStorage.setItem('users', JSON.stringify(users));
+            }
+
+            // Check if there's already a current user logged in
+            let currentUser = localStorage.getItem('currentUser');
+            if (currentUser) {
+                window.location.href = "main_page.html"; // Redirect if user is logged in
+                return; // Prevent further execution
+            }
+        };
+
+        // Login form handling
+        document.getElementById("loginForm").addEventListener("submit", function(event) {
+            event.preventDefault(); // Prevent form submission
+            let email = document.getElementById("email").value;
+            let password = document.getElementById("password").value;
+
+            let userFound = false; // Flag to check if user is found
+
+            // Loop through users array to find matching email and password
+            for (let i = 0; i < users.length; i++) {
+                if (users[i].email === email && users[i].password === password) {
+                    userFound = true;
+                    currentUser = users[i].name; // Store the user info
+                    localStorage.setItem('currentUser', currentUser); // Store currentUser in localStorage
+                    window.location.href = "main_page.html"; // Redirect to main page
+                    break;
+                }
+            }
+
+            // If no match is found, display an error message
+            if (!userFound) {
+                document.getElementById("error-message").innerText = "Invalid email or password";
+            }
+        });
+    </script>
+</body>
+</html>
