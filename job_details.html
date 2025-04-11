@@ -1,7 +1,6 @@
 <style>
 /* General styles for body */
 body {
-    /* Set font, margin, padding, and background color */
     font-family: 'Arial', sans-serif;
     margin: 0;
     padding: 0;
@@ -9,12 +8,11 @@ body {
     display: flex;
     justify-content: center;
     align-items: flex-start;
-    height: 100vh;
+    min-height: 100vh;
 }
 
 /* Container for job details */
 .container {
-    /* Styling for the container */
     background-color: rgba(255, 255, 255, 0.9);
     padding: 40px;
     border-radius: 10px;
@@ -23,9 +21,19 @@ body {
     width: 100%;
     font-family: 'Trickster', sans-serif;
     text-align: center;
-    margin-top: 40px;
+    margin: 40px 20px; /* side margin for small screens */
+    box-sizing: border-box;
+}
+
+/* Responsive adjustments for mobile */
+@media screen and (max-width: 480px) {
+    .container {
+        padding: 30px 20px;
+        margin: 20px;
+    }
 }
 </style>
+
 
 <html lang="en">
 <head>
