@@ -122,8 +122,12 @@
     }
     
     .back-button button {
-        width: 100%;
-        z-index: 2;
+        position: fixed; /* or 'absolute' depending on your requirement */
+        top: 20px; /* Adjust to your desired position */
+        left: 20px; /* Adjust to your desired position */
+        z-index: 9999; /* Set a high value to ensure it is above all other elements */
+        width: auto; /* Optional: Adjust width as needed */
+        background-color: #fff; /* Optional: Highlight the button visually */
     }
 }
 </style>
