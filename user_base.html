@@ -8,16 +8,16 @@
 <p id="users"></p>
 </body>
 <script>
-    //if (localStorage.getItem('currentUser') !== 'Admin') {
-       // window.location.href = 'index.html';
+    if (localStorage.getItem('currentUser') !== 'Admin') {
+        window.location.href = 'index.html';
     }
 
     let currentUser = localStorage.getItem('currentUser');
     let users = JSON.parse(localStorage.getItem('users')) || [];
     let currentUserData = users.find(user => user.name === currentUser);
 
-    //if (currentUserData && currentUserData.role !== 'Admin') {
-        //window.location.href = 'main_page.html';
+    if (currentUserData && currentUserData.role !== 'Admin') {
+        window.location.href = 'main_page.html';
     }
 
     window.onload = function() {
